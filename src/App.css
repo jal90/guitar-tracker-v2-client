@@ -1,4 +1,4 @@
-@import 'bulma'
+@import '../node_modules/bulma/bulma.sass'
 
   .App {
   text-align: center;
