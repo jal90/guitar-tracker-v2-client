@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
 import SigninForm from './signin-form.js';
-
+import Guitars from './Guitars'
+// const store = require('./store.js')
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {token: ''}
-  }
 
   render() {
     return (
-      <SigninForm onLogin={this.props.login} />
+      <div>
+        <SigninForm />
+        <Guitars />
+      </div>
     );
   }
 }
