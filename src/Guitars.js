@@ -29,13 +29,6 @@ class Guitars extends Component {
       .then(() => console.log(this.state))
   }
 
-  // handler(e) {
-  //   e.preventDefault()
-  //   this.setState({
-  //     make:
-  //   })
-  // }
-
   render() {
     return (
       <div>
@@ -48,7 +41,7 @@ class Guitars extends Component {
                 <div className="card-content">
                   <p className="title">{guitar.make}</p>
                   <p className="answer">{guitar.model}</p>
-                  <UpdateGuitar id={guitar.id}/>
+                  <UpdateGuitar id={guitar.id} getGuitars={this.getGuitars}/>
                 </div>
               </div>
             </div>

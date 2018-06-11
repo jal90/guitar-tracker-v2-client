@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-// import './App.css';
-// import SigninForm from './signin-form.js';
-// import Guitars from './Guitars'
 import $ from 'jquery';
 const store = require('./store.js')
 
@@ -43,16 +40,12 @@ class UpdateGuitar extends Component {
         }
       }
     })
-      // .then(res => {
-        // this.setState({token: res.user.token})
-        // store.token = res.user.token
-      // })
+      .then(this.props.getGuitars)
   }
 
   render() {
     return (
       <div>
-        {/* This is the guitar's id as a prop: {this.props.id} */}
         <form onSubmit={this.onUpdate}>
           <input placeholder="Make" type="text" value={this.state.make} onChange={this.handleMakeChange} />
           <input placeholder="Model" type="text" value={this.state.model} onChange={this.handleModelChange} />
