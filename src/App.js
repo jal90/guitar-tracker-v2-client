@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import SigninForm from './signin-form.js';
+import SignupForm from './signup-form.js';
 import Guitars from './Guitars'
-// const store = require('./store.js')
 
 class App extends Component {
 
@@ -10,6 +10,7 @@ class App extends Component {
     return (
       <div>
         <SigninForm />
+        <SignupForm />
         <Guitars />
       </div>
     );

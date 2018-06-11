@@ -1,5 +1,5 @@
 import UpdateGuitar from './UpdateGuitar'
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import $ from 'jquery';
 const store = require('./store.js')
 
@@ -24,31 +24,38 @@ class Guitars extends Component {
     })
       .then(res => {
         const guitars = res
-        this.setState({ guitars })
+        this.setState({guitars})
       })
-      .then(() => console.log(this.state))
+      .then(() => console.log(this.state.guitars.length))
   }
 
   render() {
-    return (
-      <div>
-        <button onClick={this.getGuitars}>See guitars</button>
+    const userHasGuitars = this.state.guitars.length === undefined ? false : true
+    let catalog
 
-        <div className="columns">
-          {this.state.guitars.map(guitar =>
-            <div className="column is-one-third" key={guitar.id}>
-              <div className="card">
-                <div className="card-content">
-                  <p className="title">{guitar.make}</p>
-                  <p className="answer">{guitar.model}</p>
-                  <UpdateGuitar id={guitar.id} getGuitars={this.getGuitars}/>
-                </div>
-              </div>
-            </div>
-          )}
+    if (userHasGuitars) {
+      catalog =
+      this.state.guitars.map(guitar => <div className="column is-one-third" key={guitar.id}>
+        <div className="card">
+          <div className="card-content">
+            <p className="title">{guitar.make}</p>
+            <p className="answer">{guitar.model}</p>
+            <UpdateGuitar id={guitar.id} getGuitars={this.getGuitars}/>
+          </div>
         </div>
+      </div>)
+    } else {
+      catalog = <div className="column">Create a guitar with the form that doesn't exist yet!</div>
+    }
+
+    
+    return (<div>
+      <button onClick={this.getGuitars}>See guitars</button>
+
+      <div className="columns">
+        {catalog}
       </div>
-    );
+    </div>);
   }
 }
 
