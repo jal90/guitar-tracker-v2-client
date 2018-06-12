@@ -9,7 +9,9 @@ class Guitars extends Component {
   render() {
     const userHasGuitars = this.props.guitars.length === undefined ? false : true
     let catalog
+    let isLoggedIn = this.props.isLoggedIn
 
+    if (isLoggedIn) {
     if (userHasGuitars) {
       catalog =
       this.props.guitars.map(guitar => <div className="column is-one-quarter" key={guitar.id}>
@@ -28,6 +30,7 @@ class Guitars extends Component {
     } else {
       catalog = <div className="column">Create a guitar with the form that doesn't exist yet!</div>
     }
+  }
 
 
     return (<div>

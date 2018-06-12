@@ -3,6 +3,8 @@ import './App.css';
 import SigninForm from './signin-form.js';
 import SignupForm from './signup-form.js';
 import Guitars from './Guitars'
+import SignoutButton from './signout-button'
+
 import 'bulma/css/bulma.css'
 import $ from 'jquery';
 const store = require('./store.js')
@@ -12,10 +14,13 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      guitars: []
+      guitars: [],
+      isLoggedIn: false
     }
 
     this.getGuitars = this.getGuitars.bind(this)
+    this.signUserIn = this.signUserIn.bind(this)
+    this.logUserOut = this.logUserOut.bind(this)
   }
 
   getGuitars() {
@@ -33,12 +38,22 @@ class App extends Component {
       })
    }
 
+   signUserIn() {
+     this.setState({isLoggedIn: true})
+   }
+
+   logUserOut() {
+     this.setState({isLoggedIn: false})
+   }
+
   render() {
+
     return (
       <div>
-        <SigninForm getGuitars={this.getGuitars} />
+        <SigninForm getGuitars={this.getGuitars} signUserIn={this.signUserIn} isLoggedIn={this.state.isLoggedIn} />
         <SignupForm />
-        <Guitars getGuitars={this.getGuitars} guitars={this.state.guitars}/>
+        <SignoutButton getGuitars={this.getGuitars} logUserOut={this.logUserOut} />
+        <Guitars getGuitars={this.getGuitars} guitars={this.state.guitars} isLoggedIn={this.state.isLoggedIn} />
       </div>
     );
   }
