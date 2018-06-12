@@ -49,6 +49,7 @@ class SigninForm extends Component {
       })
       .then(() => this.props.signUserIn())
       .then(() => this.props.getGuitars())
+      .then(() => this.props.getSetups())
   }
 
   render() {
