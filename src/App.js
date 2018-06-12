@@ -23,6 +23,8 @@ class App extends Component {
     this.signUserIn = this.signUserIn.bind(this)
     this.logUserOut = this.logUserOut.bind(this)
     this.getSetups = this.getSetups.bind(this)
+    this.getSetups = this.getSetups.bind(this)
+
   }
 
   getGuitars() {
@@ -61,6 +63,10 @@ class App extends Component {
 
    logUserOut() {
      this.setState({isLoggedIn: false})
+   }
+
+   shouldRenderSetups() {
+
    }
 
   render() {

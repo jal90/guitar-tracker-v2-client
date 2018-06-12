@@ -2,7 +2,7 @@ import CreateGuitar from './CreateGuitar'
 import UpdateGuitar from './UpdateGuitar'
 import DeleteGuitar from './DeleteGuitar'
 import React, {Component} from 'react';
-import Works from './Works'
+import Setups from './Setups'
 import './Guitars.css'
 
 class Guitars extends Component {
@@ -25,7 +25,7 @@ class Guitars extends Component {
 
             <UpdateGuitar guitar={guitar} getGuitars={this.props.getGuitars}/>
             <DeleteGuitar id={guitar.id} getGuitars={this.props.getGuitars}/>
-            <Works guitar={guitar} setups={this.props.setups} />
+            <Setups guitar={guitar} setups={this.props.setups} />
           </div>
         </div>
       </div>)
