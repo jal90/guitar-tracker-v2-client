@@ -29,8 +29,16 @@ class SignoutButton extends Component {
   }
 
   render() {
+    const isLoggedIn = this.props.isLoggedIn
+    let button
+
+    if (isLoggedIn) {
+      button = <button onClick={this.signOut}>Sign out</button>
+    }
+
+
     return (
-      <button onClick={this.signOut}>Sign out</button>
+      <div>{button}</div>
     );
   }
 }

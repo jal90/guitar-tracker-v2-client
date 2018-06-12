@@ -52,7 +52,7 @@ class App extends Component {
       <div>
         <SigninForm getGuitars={this.getGuitars} signUserIn={this.signUserIn} isLoggedIn={this.state.isLoggedIn} />
         <SignupForm />
-        <SignoutButton getGuitars={this.getGuitars} logUserOut={this.logUserOut} />
+        <SignoutButton getGuitars={this.getGuitars} logUserOut={this.logUserOut} isLoggedIn={this.state.isLoggedIn} />
         <Guitars getGuitars={this.getGuitars} guitars={this.state.guitars} isLoggedIn={this.state.isLoggedIn} />
       </div>
     );

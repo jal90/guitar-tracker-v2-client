@@ -52,13 +52,25 @@ class SigninForm extends Component {
   }
 
   render() {
-    return (
-      <form onSubmit={this.onLogin}>
+    let isLoggedIn = this.props.isLoggedIn
+    let form
+
+    if (!isLoggedIn) {
+      form =
+        <form onSubmit={this.onLogin}>
         <label>Sign in</label>
         <input placeholder="Email" type="text" value={this.state.email} onChange={this.handleEmailChange} />
         <input placeholder="Password" type="password" value={this.state.password} onChange={this.handlePasswordChange} />
         <button type="submit">Submit</button>
       </form>
+    }
+
+
+
+    return (
+      <div>
+      {form}
+    </div>
     );
   }
 }
