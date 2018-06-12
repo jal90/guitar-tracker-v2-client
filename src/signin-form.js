@@ -8,8 +8,7 @@ class SigninForm extends Component {
     super(props)
     this.state = {
       email: '',
-      password: '',
-      token: ''
+      password: ''
     }
 
     this.handleEmailChange = this.handleEmailChange.bind(this)
@@ -24,7 +23,6 @@ class SigninForm extends Component {
 
   handlePasswordChange(e) {
     this.setState({password: e.target.value})
-    store.password = e.target.value
   }
 
   onLogin (e) {
@@ -44,6 +42,10 @@ class SigninForm extends Component {
     })
       .then(res => {
         store.token = res.user.token
+        this.setState({
+          email: '',
+          password: ''
+        })
       })
   }
 

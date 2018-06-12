@@ -43,9 +43,6 @@ class SignupForm extends Component {
         }
       }
     })
-      // .then(res => {
-      //   store.token = res.user.token
-      // })
   }
 
   render() {
