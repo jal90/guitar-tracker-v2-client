@@ -1,3 +1,4 @@
+import 'bulma/css/bulma.css'
 import React, { Component } from 'react';
 import $ from 'jquery';
 const store = require('./store.js')

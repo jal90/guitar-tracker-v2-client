@@ -1,0 +1,9 @@
+/* import 'bulma/css/bulma.css' */
+
+.card {
+  height: 100%;
+}
+
+.columns {
+  flex-wrap: wrap;
+}

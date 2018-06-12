@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import 'bulma/css/bulma.css'
 const store = require('./store.js')
 
 class SignupForm extends Component {

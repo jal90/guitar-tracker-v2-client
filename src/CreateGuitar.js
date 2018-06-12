@@ -3,7 +3,7 @@ import $ from 'jquery';
 import 'bulma/css/bulma.css'
 const store = require('./store.js')
 
-class UpdateGuitar extends Component {
+class CreateGuitar extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -18,7 +18,7 @@ class UpdateGuitar extends Component {
     this.handleYearChange = this.handleYearChange.bind(this)
     this.handlePriceChange = this.handlePriceChange.bind(this)
 
-    this.onUpdate = this.onUpdate.bind(this)
+    this.onCreate = this.onCreate.bind(this)
   }
 
   handleMakeChange(e) {
@@ -37,11 +37,11 @@ class UpdateGuitar extends Component {
     this.setState({price: e.target.value})
   }
 
-  onUpdate (e) {
+  onCreate (e) {
     e.preventDefault()
     $.ajax({
-      url: 'http://localhost:4741/guitars/' + this.props.id,
-      method: 'PATCH',
+      url: 'http://localhost:4741/guitars/',
+      method: 'POST',
       headers: {
         contentType: 'application/json',
         Authorization: 'Token token=' + store.token
@@ -57,17 +57,18 @@ class UpdateGuitar extends Component {
     })
     // refresh the catalog view
       .then(this.props.getGuitars)
-      .then(() => this.setState({make: '', model: ''}))
+      .then(() => this.setState({make: '', model: '', year: '', price: ''}))
   }
 
   render() {
     return (
       <div>
-        <form onSubmit={this.onUpdate}>
+        <form onSubmit={this.onCreate}>
           <input placeholder="Make" type="text" value={this.state.make} onChange={this.handleMakeChange} />
           <input placeholder="Model" type="text" value={this.state.model} onChange={this.handleModelChange} />
           <input placeholder="Year" type="text" value={this.state.year} onChange={this.handleYearChange} />
           <input placeholder="Price" type="text" value={this.state.price} onChange={this.handlePriceChange} />
+
           <button type="submit">Submit</button>
         </form>
       </div>
@@ -75,4 +76,4 @@ class UpdateGuitar extends Component {
   }
 }
 
-export default UpdateGuitar;
+export default CreateGuitar;

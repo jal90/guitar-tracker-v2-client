@@ -1,6 +1,9 @@
+import CreateGuitar from './CreateGuitar'
 import UpdateGuitar from './UpdateGuitar'
+import DeleteGuitar from './DeleteGuitar'
 import React, {Component} from 'react';
 import $ from 'jquery';
+import './Guitars.css'
 const store = require('./store.js')
 
 class Guitars extends Component {
@@ -34,12 +37,16 @@ class Guitars extends Component {
 
     if (userHasGuitars) {
       catalog =
-      this.state.guitars.map(guitar => <div className="column is-one-third" key={guitar.id}>
+      this.state.guitars.map(guitar => <div className="column is-one-quarter" key={guitar.id}>
         <div className="card">
           <div className="card-content">
             <p className="title">{guitar.make}</p>
-            <p className="answer">{guitar.model}</p>
+            <p className="model">{guitar.model}</p>
+            <p className="year">{guitar.year}</p>
+            <p className="price">{guitar.price}</p>
+
             <UpdateGuitar id={guitar.id} getGuitars={this.getGuitars}/>
+            <DeleteGuitar id={guitar.id} getGuitars={this.getGuitars}/>
           </div>
         </div>
       </div>)
@@ -50,10 +57,13 @@ class Guitars extends Component {
 
     return (<div>
       <button onClick={this.getGuitars}>See guitars</button>
+      <CreateGuitar getGuitars={this.getGuitars}/>
 
+      <div className="container">
       <div className="columns">
         {catalog}
       </div>
+    </div>
     </div>);
   }
 }
