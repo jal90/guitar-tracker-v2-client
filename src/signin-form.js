@@ -47,6 +47,7 @@ class SigninForm extends Component {
           password: ''
         })
       })
+      .then(() => this.props.getGuitars())
   }
 
   render() {

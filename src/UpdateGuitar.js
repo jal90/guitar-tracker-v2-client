@@ -7,10 +7,10 @@ class UpdateGuitar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      make: '',
-      model: '',
-      year: '',
-      price: ''
+      make: this.props.guitar.make,
+      model: this.props.guitar.model,
+      year: this.props.guitar.year,
+      price: this.props.guitar.price
     }
 
     this.handleMakeChange = this.handleMakeChange.bind(this)
@@ -40,7 +40,7 @@ class UpdateGuitar extends Component {
   onUpdate (e) {
     e.preventDefault()
     $.ajax({
-      url: 'http://localhost:4741/guitars/' + this.props.id,
+      url: 'http://localhost:4741/guitars/' + this.props.guitar.id,
       method: 'PATCH',
       headers: {
         contentType: 'application/json',
@@ -57,7 +57,6 @@ class UpdateGuitar extends Component {
     })
     // refresh the catalog view
       .then(this.props.getGuitars)
-      .then(() => this.setState({make: '', model: ''}))
   }
 
   render() {
