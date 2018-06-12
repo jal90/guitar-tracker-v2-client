@@ -40,7 +40,9 @@ class UpdateGuitar extends Component {
         }
       }
     })
+    // refresh the catalog view
       .then(this.props.getGuitars)
+      .then(() => this.setState({make: '', model: ''}))
   }
 
   render() {

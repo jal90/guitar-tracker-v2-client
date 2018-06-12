@@ -26,8 +26,7 @@ class Guitars extends Component {
         const guitars = res
         this.setState({guitars})
       })
-      .then(() => console.log(this.state.guitars.length))
-  }
+   }
 
   render() {
     const userHasGuitars = this.state.guitars.length === undefined ? false : true
@@ -48,7 +47,7 @@ class Guitars extends Component {
       catalog = <div className="column">Create a guitar with the form that doesn't exist yet!</div>
     }
 
-    
+
     return (<div>
       <button onClick={this.getGuitars}>See guitars</button>
 
