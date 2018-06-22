@@ -4,20 +4,20 @@ import SigninForm from './signin-form.js';
 import SignupForm from './signup-form.js';
 import Guitars from './Guitars'
 import SignoutButton from './signout-button'
-import { signUpCall, signInCall, signOutCall, getGuitarsCall } from './api.js'
+import { signUpCall, signInCall, signOutCall } from './api.js'
 
 
 import 'bulma/css/bulma.css'
-import $ from 'jquery';
 import store from './store.js'
 
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {isLoggedIn: false}
+    this.state = {isLoggedIn: false, feedback: ''}
 
     this.signIn = this.signIn.bind(this)
+    this.signUp = this.signUp.bind(this)
     this.signOut = this.signOut.bind(this)
   }
 
@@ -31,7 +31,8 @@ class App extends Component {
     }
     // API call from api.js
     signUpCall(credentials)
-    // TODO: this is where success and error should go
+      .then(() => this.setState({feedback: 'Signed up'}))
+      .catch(() => this.setState({feedback: 'User exists already (or potentially other error)'}))
   }
 
   signIn (email, password) {
@@ -45,17 +46,17 @@ class App extends Component {
     signInCall(credentials)
       .then(res => {
         store.token = res.user.token
-        this.setState({isLoggedIn: true})
+        this.setState({isLoggedIn: true, feedback: 'Signed in'})
       })
-      // TODO: write error catching
+      .catch(() => this.setState({feedback: 'Something\'s wrong, check your credentials'}))
   }
 
   signOut () {
     // API call from api.js
     signOutCall()
-      .then(this.setState({isLoggedIn: false}))
-      .then(store.token = '')
-    // TODO: catch error
+      .then(() => store.token = '')
+      .then(() => this.setState({isLoggedIn: false, feedback: 'Signed out'}))
+      .catch(() => this.setState({feedback: 'Something went wrong, please try again'}))
   }
 
   render() {
@@ -63,16 +64,17 @@ class App extends Component {
 
     return (
       <div className="App">
+        <div>{this.state.feedback}</div>
         { isLoggedIn ?
           <div>
-          <SignoutButton signOutAction={this.signOut} />
-          <Guitars />
-        </div>
+            <SignoutButton signOutAction={this.signOut} />
+            <Guitars />
+          </div>
           :
           <div>
-          <SigninForm signInAction={this.signIn} />
-          <SignupForm signUpAction={this.signUp} />
-        </div>
+            <SigninForm signInAction={this.signIn} />
+            <SignupForm signUpAction={this.signUp} />
+          </div>
         }
       </div>
     );
