@@ -10,15 +10,17 @@ class CreateSetup extends Component {
     super(props)
     this.state = {
       string_brand: '',
-      model: '',
-      year: '',
-      price: ''
+      string_gauge: '',
+      date_strings_changed: '',
+      date_of_setup: '',
+      setup_notes: ''
     }
 
-    this.handleMakeChange = this.handleMakeChange.bind(this)
-    this.handleModelChange = this.handleModelChange.bind(this)
-    this.handleYearChange = this.handleYearChange.bind(this)
-    this.handlePriceChange = this.handlePriceChange.bind(this)
+    this.handleStringBrandChange = this.handleStringBrandChange.bind(this)
+    this.handleStringGaugeChange = this.handleStringGaugeChange.bind(this)
+    this.handleStringChangeDateChange = this.handleStringChangeDateChange.bind(this)
+    this.handleSetupDateChange = this.handleSetupDateChange.bind(this)
+    this.handleSetupNotesChange = this.handleSetupNotesChange.bind(this)
 
     this.onCreate = this.onCreate.bind(this)
   }
@@ -27,31 +29,37 @@ class CreateSetup extends Component {
     this.setState({string_brand: e.target.value})
   }
 
-  handleModelChange(e) {
-    this.setState({model: e.target.value})
+  handleStringGaugeChange(e) {
+    this.setState({string_gauge: e.target.value})
   }
 
-  handleYearChange(e) {
-    this.setState({year: e.target.value})
+  handleSetupDateChange(e) {
+    this.setState({date_of_setup: e.target.value})
   }
 
-  handlePriceChange(e) {
-    this.setState({price: e.target.value})
+  handleSetupNotesChange(e) {
+    this.setState({setup_notes: e.target.value})
+  }
+
+  handleStringChangeDateChange(e) {
+    this.setState({date_strings_changed: e.target.value})
   }
 
   onCreate (e) {
     e.preventDefault()
-    const data = {guitar:
+    const data = {setup:
       {
-        make: this.state.make,
-        model: this.state.model,
-        year: this.state.year,
-        price: this.state.price
+        string_brand: this.state.string_brand,
+        guitar_id: this.props.guitarId,
+        string_gauge: this.state.string_gauge,
+        date_strings_changed: this.state.date_strings_changed,
+        date_of_setup: this.state.date_of_setup,
+        setup_notes: this.state.setup_notes
       }
     }
-    createGuitarCall(data)
-      .then(() => this.props.getGuitarsAction())
-      .then(() => this.setState({make: '', model: '', year: '', price: ''}))
+    createSetupCall(data)
+      // .then(() => this.props.getGuitarsAction())
+      // .then(() => this.setState({make: '', model: '', year: '', price: ''}))
   }
 
   render() {
@@ -59,12 +67,10 @@ class CreateSetup extends Component {
       <div>
         <form onSubmit={this.onCreate}>
           <input placeholder="Sting brand" type="text" value={this.state.string_brand} onChange={this.handleStringBrandChange} />
-          <input placeholder="Model" type="text" value={this.state.model} onChange={this.handleModelChange} />
-          <input placeholder="Year" type="text" value={this.state.year} onChange={this.handleYearChange} />
-          <input placeholder="Price" type="text" value={this.state.price} onChange={this.handlePriceChange} />
-          <input placeholder="Model" type="text" value={this.state.model} onChange={this.handleModelChange} />
-          <input placeholder="Year" type="text" value={this.state.year} onChange={this.handleYearChange} />
-          <input placeholder="Price" type="text" value={this.state.price} onChange={this.handlePriceChange} />
+          <input placeholder="StringGauge" type="text" value={this.state.string_gauge} onChange={this.handleStringGaugeChange} />
+          <input placeholder="SetupDate" type="text" value={this.state.date_of_setup} onChange={this.handleSetupDateChange} />
+          <input placeholder="String change Date" type="text" value={this.state.date_strings_changed} onChange={this.handleStringChangeDateChange} />
+          <input placeholder="SetupNotes" type="text" value={this.state.setup_notes} onChange={this.handleSetupNotesChange} />
 
           <button type="submit">Submit</button>
         </form>
