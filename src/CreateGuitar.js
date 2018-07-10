@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
-import 'bulma/css/bulma.css'
-const store = require('./store.js')
+import { createGuitarCall } from './api.js'
 
 class CreateGuitar extends Component {
   constructor(props) {
@@ -39,24 +37,16 @@ class CreateGuitar extends Component {
 
   onCreate (e) {
     e.preventDefault()
-    $.ajax({
-      url: 'http://localhost:4741/guitars/',
-      method: 'POST',
-      headers: {
-        contentType: 'application/json',
-        Authorization: 'Token token=' + store.token
-      },
-      data: {
-        guitar: {
-          make: this.state.make,
-          model: this.state.model,
-          year: this.state.year,
-          price: this.state.price
-        }
+    const data = {guitar:
+      {
+        make: this.state.make,
+        model: this.state.model,
+        year: this.state.year,
+        price: this.state.price
       }
-    })
-    // refresh the catalog view
-      .then(this.props.getGuitars)
+    }
+    createGuitarCall(data)
+      .then(() => this.props.getGuitarsAction())
       .then(() => this.setState({make: '', model: '', year: '', price: ''}))
   }
 

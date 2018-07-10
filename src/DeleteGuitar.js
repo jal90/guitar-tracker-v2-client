@@ -1,32 +1,18 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
-import 'bulma/css/bulma.css'
-const store = require('./store.js')
+import { deleteGuitarCall } from './api.js'
 
-class UpdateGuitar extends Component {
+class DeleteGuitar extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      make: '',
-      model: '',
-
-    }
 
     this.deleteGuitar = this.deleteGuitar.bind(this)
-
   }
 
   deleteGuitar() {
     if (window.confirm("Do you really want to delete this guitar?")) {
-      $.ajax({
-        url: 'http://localhost:4741/guitars/' + this.props.id,
-        method: 'DELETE',
-        headers: {
-          contentType: 'application/json',
-          Authorization: 'Token token=' + store.token
-        }
-      })
-      .then(this.props.getGuitars)
+    // put api.js function here
+    deleteGuitarCall(this.props.id)
+      .then(() => this.props.getGuitarsAction())
     }
   }
 
@@ -37,4 +23,4 @@ class UpdateGuitar extends Component {
   }
 }
 
-export default UpdateGuitar;
+export default DeleteGuitar;
