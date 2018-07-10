@@ -58,8 +58,8 @@ class CreateSetup extends Component {
       }
     }
     createSetupCall(data)
-      // .then(() => this.props.getGuitarsAction())
-      // .then(() => this.setState({make: '', model: '', year: '', price: ''}))
+      .then(() => this.props.getSetups())
+      .then(() => this.setState({string_brand: '', string_gauge: '', date_of_setup: '', date_strings_changed: '', setup_notes: ''}))
   }
 
   render() {
