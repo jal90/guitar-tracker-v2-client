@@ -4,57 +4,65 @@ import DeleteGuitar from './DeleteGuitar'
 import React, {Component} from 'react';
 import Setups from './Setups'
 import './Guitars.css'
-import { getGuitarsCall } from './api.js'
+import {getGuitarsCall} from './api.js'
 
 class Guitars extends Component {
   constructor(props) {
     super(props)
-    this.state = {guitars: []}
+    this.state = {
+      guitars: []
+    }
+
+    this.getGuitars = this.getGuitars.bind(this)
   }
 
-  componentDidMount () {
-    // API call from api.js
-    getGuitarsCall()
+    getGuitars () {
+      // API call from api.js
+      getGuitarsCall()
       .then(res => {
         this.setState({guitars: res})
       })
-   }
-
-  render() {
-    const userHasGuitars = this.state.guitars.length === undefined ? false : true
-    let catalog
-
-    { userHasGuitars ?
-      catalog =
-      this.state.guitars.map(guitar => <div className="column is-one-quarter" key={guitar.id}>
-        <div className="card">
-          <div className="card-content">
-            <p className="title">{guitar.make}</p>
-            <p className="model">{guitar.model}</p>
-            <p className="year">{guitar.year}</p>
-            <p className="price">{guitar.price}</p>
-
-            {/* TODO: pass appropriate function to components */}
-            <UpdateGuitar guitar={guitar} getGuitars={this.props.getGuitars}/>
-            <DeleteGuitar id={guitar.id} getGuitars={this.props.getGuitars}/>
-            {/* <Setups guitar={guitar} setups={this.props.setups} /> */}
-          </div>
-        </div>
-      </div>)
-      :
-      catalog = <div className="column">Create a guitar with the form that doesn't exist yet!</div>
+      .then(() => console.log(this.state.guitars))
+      // TODO: write catch statement
     }
 
+  componentDidMount() {
+    this.getGuitars()
+  }
+
+
+  render() {
+    const userHasGuitars = this.state.guitars.length === undefined
+      ? false
+      : true
 
     return (<div>
-      {/* TODO: pass appropriate funciton to CreateGuitar */}
-      <CreateGuitar getGuitars={this.props.getGuitars}/>
+      <CreateGuitar getGuitarsAction={this.getGuitars} />
 
       <div className="container">
-      <div className="columns">
-        {catalog}
+        <div className="columns">
+          {
+            userHasGuitars
+              ? this.state.guitars.map(guitar => <div className="column is-one-quarter" key={guitar.id}>
+                <div className="card">
+                  <div className="card-content">
+                    <p className="title">ID: {guitar.id}</p>
+
+                    <p className="title">Make: {guitar.make}</p>
+                    <p className="model">Model: {guitar.model}</p>
+                    <p className="year">Year: {guitar.year}</p>
+                    <p className="price">Price: {guitar.price}</p>
+
+                    <UpdateGuitar guitar={guitar} getGuitarsAction={this.getGuitars} />
+                    <DeleteGuitar id={guitar.id} getGuitarsAction={this.getGuitars} />
+                    <Setups guitarId={guitar.id} />
+                  </div>
+                </div>
+              </div>)
+              : <div className="column">Create a guitar with the form!</div>
+          }
+          </div>
       </div>
-    </div>
     </div>);
   }
 }
