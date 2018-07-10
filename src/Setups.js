@@ -5,12 +5,9 @@ import {getSetupsCall, createSetupCall} from './api.js'
 class Setups extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      setups: []
-    }
+    this.state = {setups: [], newestSetup: [], isVisible: false}
 
     this.getSetups = this.getSetups.bind(this)
-    // this.createSetupAction = this.createSetupAction.bind(this)
     this.toggleSetupsView = this.toggleSetupsView.bind(this)
   }
 
@@ -20,12 +17,11 @@ class Setups extends Component {
     })
   }
 
-  // TODO: a new setupCreateCall needs to be called every time a user updates their guitar (and just after creation as well). To the user experience, creating the guitars first setup should seem
-  // completely streamlined with creating the guitar itself.
-
   getSetups() {
     getSetupsCall().then((res) => {
-      this.setState({setups: res})
+      const setups = res.filter(setup => setup.guitar_id === this.props.guitarId)
+      let newestSetup = setups[0]
+      this.setState({setups: setups, newestSetup: newestSetup})
     })
   }
 
@@ -33,32 +29,16 @@ class Setups extends Component {
     this.getSetups()
   }
 
-  //
-  // createSetupAction () {
-  //   const data = {setup: {
-  //     guitar_id: 23,
-  //     string_gauge: 10,
-  //     string_brand: 'elixer',
-  //     date_strings_changed: 12-12-1990,
-  //     setup_notes: 'this is a hardcoded setup'
-  //     }
-  //   }
-  //   createSetupCall(data)
-  //     .then((res) => this.setState({setups: res.string_brand}))
-  // .then((res) => console.log(res))
-  // }
-
   render() {
-    let setups = this.state.setups.filter(setup => setup.guitar_id === this.props.guitarId)
+    // let setups = this.state.setups.filter(setup => setup.guitar_id === this.props.guitarId)
+    // let newestSetup = setups[0]
 
-    const newestSetup = setups[0]
-
-    const userHasSetups = setups.length === 0
+    const userHasSetups = this.state.setups.length === 0
       ? false
       : true
 
     return (<div>
-      <CreateSetup guitarId={this.props.guitarId} />
+      <CreateSetup guitarId={this.props.guitarId} getSetups={this.getSetups}/>
 
       <button onClick={this.toggleSetupsView}>{
           this.state.isVisible
@@ -66,22 +46,20 @@ class Setups extends Component {
             : 'See all setups'
         }</button>
 
-      {/* This is one way to show the newest setup... */}
       <div>{
-          newestSetup === undefined
+          this.state.newestSetup === undefined
             ? ''
             : <div>
-                <p>string brand: {newestSetup.string_brand}</p>
-                <p>gauge: {newestSetup.string_gauge}</p>
-                <p>string change date {newestSetup.date_strings_changed}</p>
-                <p>date of setup {newestSetup.date_of_setup}</p>
-                <p>setup notes{newestSetup.setup_notes}</p>
+                <p>string brand: {this.state.newestSetup.string_brand}</p>
+                <p>gauge: {this.state.newestSetup.string_gauge}</p>
+                <p>string change date {this.state.newestSetup.date_strings_changed}</p>
+                <p>date of setup {this.state.newestSetup.date_of_setup}</p>
+                <p>setup notes{this.state.newestSetup.setup_notes}</p>
               </div>
         }</div>
       {
         userHasSetups
-        // TODO: Show only most recent setup on home page (use created_at/ updated_at properties to do this). Only Map over all guitar's setups when user wants to see a history
-          ? setups.map(setup => <div key={setup.id} className={this.state.isVisible
+          ? this.state.setups.map(setup => <div key={setup.id} className={this.state.isVisible
               ? 'visible'
               : 'invisible'}>
             {/* <p className="setup-id">Id: {setup.id}</p> */}
