@@ -42,9 +42,68 @@ const getGuitarsCall = function () {
   })
 }
 
+const createGuitarCall = function (data) {
+  return $.ajax({
+    url: apiOrigin + '/guitars',
+    method: 'POST',
+    headers: {
+      Authorization: 'Token token=' + store.token
+    },
+    data
+  })
+}
+
+const updateGuitarCall = function (data, id) {
+  return $.ajax({
+    url: apiOrigin + '/guitars/' + id,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + store.token
+    },
+    data
+  })
+}
+
+const deleteGuitarCall = function (id) {
+  return $.ajax({
+      url: apiOrigin + '/guitars/' + id,
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Token token=' + store.token
+      }
+    })
+}
+
+// Setup calls
+const getSetupsCall = function () {
+  return $.ajax({
+    url: apiOrigin + '/setups',
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + store.token
+    }
+  })
+}
+
+const createSetupCall = function (data) {
+  return $.ajax({
+    url: apiOrigin + '/setups',
+    method: 'POST',
+    headers: {
+      Authorization: 'Token token=' + store.token
+    },
+    data
+  })
+}
+
 export {
   signUpCall,
   signInCall,
   signOutCall,
-  getGuitarsCall
+  getGuitarsCall,
+  createGuitarCall,
+  updateGuitarCall,
+  deleteGuitarCall,
+  getSetupsCall,
+  createSetupCall
 }
