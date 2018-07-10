@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
-import 'bulma/css/bulma.css'
-const store = require('./store.js')
+import { updateGuitarCall } from './api.js'
 
 class UpdateGuitar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      make: this.props.guitar.make,
-      model: this.props.guitar.model,
-      year: this.props.guitar.year,
-      price: this.props.guitar.price
+      make: '',
+      model: '',
+      year: '',
+      price: '',
+      isVisible: false
     }
 
     this.handleMakeChange = this.handleMakeChange.bind(this)
@@ -18,7 +17,22 @@ class UpdateGuitar extends Component {
     this.handleYearChange = this.handleYearChange.bind(this)
     this.handlePriceChange = this.handlePriceChange.bind(this)
 
+    this.toggleUpdateView = this.toggleUpdateView.bind(this)
+
     this.onUpdate = this.onUpdate.bind(this)
+  }
+
+  componentDidMount() {
+    this.setState({
+      make: this.props.guitar.make,
+      model: this.props.guitar.model,
+      year: this.props.guitar.year,
+      price: this.props.guitar.price
+    })
+  }
+
+  toggleUpdateView() {
+    this.setState({isVisible: !this.state.isVisible})
   }
 
   handleMakeChange(e) {
@@ -39,34 +53,29 @@ class UpdateGuitar extends Component {
 
   onUpdate (e) {
     e.preventDefault()
-    $.ajax({
-      url: 'http://localhost:4741/guitars/' + this.props.guitar.id,
-      method: 'PATCH',
-      headers: {
-        contentType: 'application/json',
-        Authorization: 'Token token=' + store.token
-      },
-      data: {
-        guitar: {
-          make: this.state.make,
-          model: this.state.model,
-          year: this.state.year,
-          price: this.state.price
-        }
+    const data = {
+      guitar: {
+        make: this.state.make,
+        model: this.state.model,
+        year: this.state.year,
+        price: this.state.price
       }
-    })
-    // refresh the catalog view
-      .then(this.props.getGuitars)
+    }
+    updateGuitarCall(data, this.props.guitar.id)
+      .then(() => this.props.getGuitarsAction())
+      .then(() => this.setState({isVisible: false}))
   }
 
   render() {
     return (
       <div>
-        <form onSubmit={this.onUpdate}>
-          <input placeholder="Make" type="text" value={this.state.make} onChange={this.handleMakeChange} />
-          <input placeholder="Model" type="text" value={this.state.model} onChange={this.handleModelChange} />
-          <input placeholder="Year" type="text" value={this.state.year} onChange={this.handleYearChange} />
-          <input placeholder="Price" type="text" value={this.state.price} onChange={this.handlePriceChange} />
+        <button onClick={this.toggleUpdateView}>{this.state.isVisible ? 'Never mind, hide this form' : 'Update this guitar'}</button>
+
+        <form onSubmit={this.onUpdate} className={this.state.isVisible ? 'visible' : 'invisible'}>
+          <input placeholder="Make" type="text" defaultValue={this.props.guitar.make} onChange={this.handleMakeChange} />
+          <input placeholder="Model" type="text" defaultValue={this.props.guitar.model} onChange={this.handleModelChange} />
+          <input placeholder="Year" type="text" defaultValue={this.props.guitar.year} onChange={this.handleYearChange} />
+          <input placeholder="Price" type="text" defaultValue={this.props.guitar.price} onChange={this.handlePriceChange} />
           <button type="submit">Submit</button>
         </form>
       </div>
