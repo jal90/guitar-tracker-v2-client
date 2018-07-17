@@ -13,7 +13,8 @@ class CreateSetup extends Component {
       string_gauge: '',
       date_strings_changed: '',
       date_of_setup: '',
-      setup_notes: ''
+      setup_notes: '',
+      isVisible: false
     }
 
     this.handleStringBrandChange = this.handleStringBrandChange.bind(this)
@@ -21,8 +22,15 @@ class CreateSetup extends Component {
     this.handleStringChangeDateChange = this.handleStringChangeDateChange.bind(this)
     this.handleSetupDateChange = this.handleSetupDateChange.bind(this)
     this.handleSetupNotesChange = this.handleSetupNotesChange.bind(this)
+    this.toggleCreateSetupView = this.toggleCreateSetupView.bind(this)
 
     this.onCreate = this.onCreate.bind(this)
+  }
+
+  toggleCreateSetupView() {
+    this.setState({
+      isVisible: !this.state.isVisible
+    })
   }
 
   handleStringBrandChange(e) {
@@ -65,7 +73,15 @@ class CreateSetup extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.onCreate}>
+        <button onClick={this.toggleCreateSetupView}>{
+            this.state.isVisible
+              ? 'hide form'
+              : 'Update guitar\'s SETUP'
+          }</button>
+
+        <form onSubmit={this.onCreate} className={this.state.isVisible
+            ? 'visible'
+            : 'invisible'}>
           <input placeholder="Sting brand" type="text" value={this.state.string_brand} onChange={this.handleStringBrandChange} />
           <input placeholder="StringGauge" type="text" value={this.state.string_gauge} onChange={this.handleStringGaugeChange} />
           <input placeholder="SetupDate" type="text" value={this.state.date_of_setup} onChange={this.handleSetupDateChange} />

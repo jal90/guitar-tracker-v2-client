@@ -22,7 +22,6 @@ class Guitars extends Component {
       .then(res => {
         this.setState({guitars: res})
       })
-      .then(() => console.log(this.state.guitars))
       // TODO: write catch statement
     }
 
@@ -37,6 +36,7 @@ class Guitars extends Component {
       : true
 
     return (<div>
+      {/* TODO: move out of here and into App.js? */}
       <CreateGuitar getGuitarsAction={this.getGuitars} />
 
       <div className="container">
@@ -46,20 +46,22 @@ class Guitars extends Component {
               ? this.state.guitars.map(guitar => <div className="column is-one-quarter" key={guitar.id}>
                 <div className="card">
                   <div className="card-content">
-                    <p className="title">ID: {guitar.id}</p>
-
-                    <p className="title">Make: {guitar.make}</p>
-                    <p className="model">Model: {guitar.model}</p>
-                    <p className="year">Year: {guitar.year}</p>
-                    <p className="price">Price: {guitar.price}</p>
+                    {/* <p className="title">ID: {guitar.id}</p> */}
+                    <p className="title">{guitar.model}</p>
+                    <p className="subtitle is-3">{guitar.make}</p>
+                    <p className="year">{guitar.year}</p>
+                    <p className="price">${guitar.price}</p>
 
                     <UpdateGuitar guitar={guitar} getGuitarsAction={this.getGuitars} />
                     <DeleteGuitar id={guitar.id} getGuitarsAction={this.getGuitars} />
-                    <Setups guitarId={guitar.id} />
+                    <div className="content">
+                      <Setups guitarId={guitar.id} />
+                    </div>
                   </div>
                 </div>
               </div>)
-              : <div className="column">Create a guitar with the form!</div>
+              :
+              <div className="column">Create a guitar with the form!</div>
           }
           </div>
       </div>

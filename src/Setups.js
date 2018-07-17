@@ -50,6 +50,7 @@ class Setups extends Component {
           this.state.newestSetup === undefined
             ? ''
             : <div>
+                <h4>Current setup:</h4>
                 <p>string brand: {this.state.newestSetup.string_brand}</p>
                 <p>gauge: {this.state.newestSetup.string_gauge}</p>
                 <p>string change date {this.state.newestSetup.date_strings_changed}</p>
